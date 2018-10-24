@@ -1,5 +1,3 @@
-const Rainbow = require('./rainbow.js');
-
 /**
  * Generic language patterns
  *
