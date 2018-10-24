@@ -1,6 +1,5 @@
 *.pyc
 *.sw?
-dist/rainbow-custom.min.js
 .AppleDouble
 node_modules
 rainbow.sublime-workspace

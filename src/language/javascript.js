@@ -1,3 +1,5 @@
+const Rainbow = require('./rainbow.js');
+
 /**
  * Javascript patterns
  *
