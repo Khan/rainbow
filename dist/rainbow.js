@@ -158,12 +158,6 @@
      * @return {Worker}
      */
     function createWorker(fn, Prism) {
-        if (isNode$1()) {
-            /* globals global, require, __filename */
-            global.Worker = require('webworker-threads').Worker;
-            return new Worker(__filename);
-        }
-
         var prismFunction = Prism.toString();
 
         var code = keys.toString();

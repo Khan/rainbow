@@ -1,3 +1,5 @@
+const Rainbow = require('../../dist/rainbow.js');
+
 /**
  * Javascript patterns
  *
