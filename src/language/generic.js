@@ -1,4 +1,6 @@
-    /**
+const Rainbow = require('../../dist/rainbow.js');
+
+/**
  * Generic language patterns
  *
  * @author Craig Campbell
