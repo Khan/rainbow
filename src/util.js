@@ -1,7 +1,6 @@
 
 export function isNode() {
-    /* globals module */
-    return typeof module !== 'undefined' && typeof module.exports === 'object';
+  return typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
 }
 
 export function isWorker() {
@@ -163,7 +162,8 @@ export function replaceAtPosition(position, replace, replaceWith, code) {
 export function createWorker(fn, Prism) {
     if (isNode()) {
         /* globals global, require, __filename */
-        global.Worker = require('webworker-threads').Worker;
+        // Disable require so it doesn't trigger import
+        // global.Worker = require('webworker-threads').Worker;
         return new Worker(__filename);
     }
 

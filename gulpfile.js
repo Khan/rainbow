@@ -24,15 +24,15 @@ var appName = 'Rainbow';
 var lowercaseAppName = 'rainbow';
 
 function _getDestinationPath() {
-    if (argv.release) {
-        destination = 'dist/' + lowercaseAppName + '.min.js';
-        return destination;
-    }
+    destination = 'dist/' + lowercaseAppName;
 
-    var destination = 'dist/' + lowercaseAppName + '.js';
     if (argv.custom) {
-        destination = 'dist/' + lowercaseAppName + '-custom.min.js';
+        destination += '-custom';
     }
+    if (argv.ugly) {
+        destination += '.min';
+    }
+    destination += '.js';
 
     return destination;
 }
@@ -187,7 +187,7 @@ function _appendCode(code) {
     var dest = _getDestinationPath();
     var stream = gulp.src(dest)
         .pipe(inject.prepend(_getComment()))
-        .pipe(inject.append(code));
+        .pipe(inject.before('return Rainbow$1', code));
 
     if (argv.output) {
         stream.pipe(through(function(data) { this.queue(data.contents); })).pipe(process.stdout);
@@ -217,7 +217,7 @@ gulp.task('append-languages', function() {
         entry: 'src/build.js',
         plugins: [uglify()]
     }).then(function (bundle) {
-        _appendCode("\n" + bundle.generate().code);
+        _appendCode("\n" + bundle.generate().code + "\n");
     });
 });
 
@@ -226,7 +226,20 @@ gulp.task('build', function(callback) {
         argv.languages = 'java,javascript,csharp,python,c,php,ruby,html,css,json';
     }
 
-    argv.ugly = true;
+    argv.ugly = false;
+    argv.custom = true;
+
+    if (argv.languages === 'none') {
+        argv.languages = '';
+    }
+
+    runSequence('pack', 'append-languages', callback);
+});
+
+gulp.task('build-webapp', function(callback) {
+    argv.languages = 'javascript';
+
+    argv.ugly = false;
     argv.custom = true;
 
     if (argv.languages === 'none') {
