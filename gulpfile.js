@@ -204,7 +204,7 @@ gulp.task('append-languages', function() {
     for (var i = 0; i < languages.length; i++) {
         languageCode.push('import \'./language/' + languages[i] + '\';');
     }
-    console.log(languageCode);
+
     if (languageCode.length === 0) {
         argv.languages = 'none';
         _appendCode('');
@@ -217,7 +217,6 @@ gulp.task('append-languages', function() {
         entry: 'src/build.js',
         plugins: [uglify()]
     }).then(function (bundle) {
-        console.log(bundle.generate().code);
         _appendCode("\n" + bundle.generate().code + "\n");
     });
 });
